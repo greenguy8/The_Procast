@@ -25,7 +25,7 @@ export const botConfig = {
     activities: [
       {
         // Text users will see (example: "Playing /help | Titan Bot").
-        name: "Made with ❤️",
+        name: "Living it up in the hot tub with my soulmate👌",
         // Activity type number (0 = Playing).
         type: 0, 
       },
@@ -38,7 +38,7 @@ export const botConfig = {
   commands: {
     // Bot owner user IDs (comma-separated in OWNER_IDS env var).
     // Owners can access owner/admin-level bot commands.
-    owners: process.env.OWNER_IDS?.split(",") || [],
+    owners: process.env.OWNER_IDS?.split("463750791270891532, 731568100159389737, 360229366246014976, 594891290588610560, 736060927719243838, 741725552926392412") || [],
 
     // Default wait time between command uses (in seconds).
     defaultCooldown: 3, 
@@ -88,8 +88,8 @@ export const botConfig = {
   embeds: {
     colors: {
       // Main brand colors.
-      primary: "#336699", 
-      secondary: "#2F3136", 
+      primary: "#1E90FF", 
+      secondary: "#FFBF00", 
 
       // Standard status colors for success/error/warning/info messages.
       success: "#57F287", 
@@ -136,7 +136,7 @@ export const botConfig = {
     },
     footer: {
       // Default footer text used in bot embeds.
-      text: "Titan Bot",
+      text: "The Procast",
       // Footer icon URL (null = no icon).
       icon: null,
     },
@@ -359,13 +359,13 @@ export const botConfig = {
     // Welcome template posted when a user joins.
     // Placeholders: {user}, {server}, {memberCount}
     defaultWelcomeMessage:
-      "Welcome {user} to {server}! We now have {memberCount} members!",
+      "Welcome {user} to {server}! I hope you brought gifts! Because if not...I'm gonna run you down in my car",
     // Goodbye template posted when a user leaves.
     // Placeholders: {user}, {memberCount}
     defaultGoodbyeMessage:
       "{user} has left the server. We now have {memberCount} members.",
     // Channel ID for welcome messages.
-    defaultWelcomeChannel: null,
+    defaultWelcomeChannel: 699799745966768171,
     // Channel ID for goodbye messages.
     defaultGoodbyeChannel: null,
   },
@@ -421,13 +421,13 @@ export const botConfig = {
   // GENERIC BOT MESSAGES
   // =========================
   messages: {
-    noPermission: "You do not have permission to use this command.",
-    cooldownActive: "Please wait {time} before using this command again.",
-    errorOccurred: "An error occurred while executing this command.",
+    noPermission: "You do not have permission to use this command. Loser.",
+    cooldownActive: "Please wait {time} before using this command again. Damn, you're impatient af.",
+    errorOccurred: "uh uh uhhhh. you didn't say the magic word.",
     missingPermissions:
       "I am missing required permissions to perform this action.",
-    commandDisabled: "This command has been disabled.",
-    maintenanceMode: "The bot is currently in maintenance mode.",
+    commandDisabled: "nope.",
+    maintenanceMode: "Slow down, dawg. Someone fixing me rn.",
   },
 
   // =========================
@@ -436,17 +436,17 @@ export const botConfig = {
   // Set any feature to `false` to disable it globally.
   features: {
     // Core systems.
-    economy: true,
+    economy: false,
     leveling: true,
     moderation: true,
-    logging: true,
+    logging: false,
     welcome: true,
 
     // Community engagement systems.
     tickets: true,
     giveaways: true,
     birthday: true,
-    counter: true,
+    counter: false,
 
     // Security and self-service systems.
     verification: true,
