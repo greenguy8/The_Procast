@@ -32,6 +32,20 @@ export default {
         InteractionHelper.patchInteractionResponses(interaction);
 
         if (interaction.isChatInputCommand()) {
+          
+          const allowed =
+              botConfig.commands.owners.includes(interaction.user.id) ||
+              interaction.member?.roles?.cache?.some(role =>
+                  botConfig.tickets.supportRoles?.includes(role.id)
+              );
+
+          if (!allowed) {
+              return interaction.reply({
+                  content: "UH UH UHHHH. You didn't say the magic word.",
+                  ephemeral: true,
+              });
+          }
+          
           try {
             logger.info(`Command executed: /${interaction.commandName} by ${interaction.user.tag}`, {
               event: 'interaction.command.received',
