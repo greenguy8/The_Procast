@@ -82,7 +82,7 @@ export async function startYouTubeNotifier(client) {
 
                 await discordChannel.send({
                     content:
-`📢 YOOOOO! Come check out the new video drop!!
+`📢 @everyone YOOOOO! Come check out the new video drop!!
 
 **${latestVideo.title}**
 
