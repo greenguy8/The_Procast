@@ -38,7 +38,7 @@ export const botConfig = {
   commands: {
     // Bot owner user IDs (comma-separated in OWNER_IDS env var).
     // Owners can access owner/admin-level bot commands.
-    owners: process.env.OWNER_IDS?.split("463750791270891532, 731568100159389737, 360229366246014976, 594891290588610560, 736060927719243838, 741725552926392412") || [],
+    owners: process.env.OWNER_IDS?.split(",") || [],
 
     // Default wait time between command uses (in seconds).
     defaultCooldown: 3, 
@@ -204,7 +204,12 @@ export const botConfig = {
     defaultCategory: null,
 
     // Role IDs allowed to manage/support tickets.
-    supportRoles: [],
+    supportRoles: [
+      "731568100159389737",
+      "360229366246014976",
+      "594891290588610560",
+      "442460373128314881"
+    ],
 
     // Priority options users/staff can assign.
     priorities: {
@@ -437,7 +442,7 @@ export const botConfig = {
   features: {
     // Core systems.
     economy: false,
-    leveling: true,
+    leveling: false,
     moderation: true,
     logging: false,
     welcome: true,
