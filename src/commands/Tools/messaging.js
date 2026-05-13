@@ -1,76 +1,92 @@
 import {
-  SlashCommandBuilder,
-  PermissionFlagsBits,
-} from "discord.js";
+    SlashCommandBuilder,
+    MessageFlags,
+    PermissionFlagsBits,
+} from 'discord.js';
 
-import botConfig from "../config/botConfig.js";
+import {
+    successEmbed,
+    errorEmbed,
+} from '../../utils/embeds.js';
+
+import { logger } from '../../utils/logger.js';
+import { handleInteractionError } from '../../utils/errorHandler.js';
+import { InteractionHelper } from '../../utils/interactionHelper.js';
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("message")
-    .setDescription("Send a custom message through the bot")
+    data: new SlashCommandBuilder()
+        .setName('message')
+        .setDescription('Send a custom message through the bot')
 
-    .addStringOption(option =>
-      option
-        .setName("content")
-        .setDescription("Message content")
-        .setRequired(true)
-    )
+        .addStringOption(option =>
+            option.setName('content')
+                .setDescription('Message content')
+                .setRequired(true)
+        )
 
-    .addChannelOption(option =>
-      option
-        .setName("channel")
-        .setDescription("Channel to send message in")
-        .setRequired(false)
-    )
+        .addChannelOption(option =>
+            option.setName('channel')
+                .setDescription('Channel to send the message in')
+                .setRequired(false)
+        )
 
-    .setDefaultMemberPermissions(
-      PermissionFlagsBits.Administrator
-    ),
+        .setDefaultMemberPermissions(
+            PermissionFlagsBits.Administrator
+        ),
 
-  async execute(interaction) {
+    async execute(interaction) {
 
-    // Optional owner-only check
-    if (
-      !botConfig.commands.owners.includes(
-        interaction.user.id
-      )
-    ) {
-      return interaction.reply({
-        content: "You cannot use this command.",
-        ephemeral: true,
-      });
-    }
+        const deferSuccess =
+            await InteractionHelper.safeDefer(
+                interaction,
+                {
+                    flags: MessageFlags.Ephemeral
+                }
+            );
 
-    const content =
-      interaction.options.getString("content");
+        if (!deferSuccess) {
+            logger.warn(`Message interaction defer failed`, {
+                userId: interaction.user.id,
+                guildId: interaction.guildId,
+                commandName: 'message'
+            });
 
-    const channel =
-      interaction.options.getChannel("channel") ||
-      interaction.channel;
+            return;
+        }
 
-    try {
+        try {
 
-      await channel.send({
-        content,
-        allowedMentions: {
-          parse: [],
-        },
-      });
+            const content =
+                interaction.options.getString('content');
 
-      await interaction.reply({
-        content: `✅ Message sent in ${channel}`,
-        ephemeral: true,
-      });
+            const channel =
+                interaction.options.getChannel('channel')
+                || interaction.channel;
 
-    } catch (error) {
+            await channel.send({
+                content,
+                allowedMentions: {
+                    parse: [],
+                },
+            });
 
-      console.error(error);
+            await InteractionHelper.safeEditReply(
+                interaction,
+                {
+                    content: '✅ Message sent successfully!',
+                }
+            );
 
-      await interaction.reply({
-        content: "❌ Failed to send message.",
-        ephemeral: true,
-      });
-    }
-  },
+        } catch (error) {
+
+            await handleInteractionError(
+                interaction,
+                error,
+                {
+                    type: 'command',
+                    commandName: 'message'
+                }
+            );
+        }
+    },
 };
